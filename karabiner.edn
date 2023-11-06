@@ -1,0 +1,140 @@
+{:applications {:emacs ["^org\\.gnu\\.Emacs$"]
+                :chrome ["^com\\.google\\.Chrome$"]
+                :chrome-canary [ "^com\\.google\\.Chrome\\.canary$"]
+                :chromes ["^com\\.google\\.Chrome$" "^com\\.google\\.Chrome\\.canary$"]
+                :arc ["^company\\.thebrowser\\.Browser$"]
+
+                :koodo-reader ["^xyz\\.960960\\.koodo$"]
+                :skim ["^net\\.sourceforge\\.skim-app\\.skim$"]
+                :apple-preview ["^com\\.apple\\.Preview$"]
+
+                :finder ["^com\\.apple\\.finder$"]
+                :iterm2 ["^com\\.googlecode\\.iterm2$"]
+
+                :telegram ["^ru\\.keepcoder\\.Telegram$"]
+                :discord ["^com\\.hnc\\.Discord$"]
+                :line ["^jp\\.naver\\.line\\.mac$"]
+                :whatsapp ["^net\\.whatsapp\\.Whatsapp$"]
+                :wechat ["^com\\.tencent\\.WeChat$"]
+                :signal-desktop ["^org\\.whispersystems\\.signal-desktop$"]
+                :monal ["^org\\.monal-im\\.prod\\.catalyst\\.monal$"]
+                :zulip ["^org\\.zulip\\.zulip-electron$"]
+                :element ["^im\\.riot\\.app$"]
+                :mastonaut ["^app\\.mastonaut\\.mac$"]
+                
+                :mathematica ["^com\\.wolfram\\.Mathematica$"]
+                :bitwarden ["^com\\.bitwarden\\.desktop$"]
+                :apple-calendar ["^com\\.apple\\.iCal$"]
+
+                :miro ["^com\\.electron\\.realtimeboard$"]
+
+                :zoom ["^us\\.zoom\\.xos$"]
+                :zotero ["^org\\.zotero\\.zotero$"]
+                :pomodoro ["^ com\\.xwavesoft\\.pomodoromaclite$"]
+                :hammerspoon ["^org\\.hammerspoon\\.Hammerspoon$"]
+                :deepl ["^com\\.linguee\\.DeepLCopyTranslator$"]
+                :reaper ["^com\\.cockos\\.reaper$"]
+                :iina ["^com\\.colliderli\\.iina$"]
+                :alfred-preferences ["^com\\.runningwithcrayons\\.Alfred-Preferences$"]
+                
+                }
+ :input-sources {:squirrel {:input_mode_id "com.googlecode.rimeime.inputmethod.Squirrel"
+                            :input_source_id "com.googlecode.rimeime.inputmethod.Squirrel.Rime"
+                            :language "zh-Hans"}
+                 :us {:input_mode_id ""
+                      :input_source_id "com.apple.keylayout.US"
+                      :language "en"}
+                 :simplified-pinyin {:input_mode_id "com.apple.inputmethod.SCIM.ITABC", ;simplified pinyin
+				                             :input_source_id "com.apple.inputmethod.SCIM.ITABC",
+				                             :language "zh-Hans"}
+                 :katakana {:input_mode_id"com.apple.inputmethod.Japanese.Katakana",
+                            :input_source_id"com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese.Katakana",
+                            :language"ja"}
+                 :hiragana {:input_mode_id "com.apple.inputmethod.Japanese",
+                            :input_source_id "com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese",
+                            :language "ja"
+                            }}
+
+ :templates {:open-app "open \"/Applications/%s.app\""
+             :activate "osascript -e 'tell application \"%s\" to activate'"
+             :open "open \"%s\""
+             :input-method-change-to "/opt/homebrew/bin/im-select %s" ;; requires "brew tap daipeihust/tap && brew install im-select". "im-select" to find current input methodname(imkey), and "im-select imkey" to change to that input method
+             :alfred "osascript -e 'tell application id \"com.runningwithcrayons.Alfred\" to run trigger \"%s\" in workflow \"%s\" with argument \"%s\"'"
+             :km "osascript -e 'tell application \"Keyboard Maestro Engine\" to do script \"%s\"'"
+             :hammerspoon "osascript -e 'tell application \"Hammerspoon\" execute lua code \"%s\" end tell'"
+             }
+ :froms {:loptionEvent []}
+ :tos {:hyper [:key :!!left_shift :modifiers [:left_command :left_control :left_option]
+               ]}
+ :main [{:des   "caps_lock, when held, becomes left_control, but posts home when pressed alone"
+         :rules [[:##caps_lock :left_control nil {:alone :home} ] ]}
+        {:des "left_option to open apps"
+         :rules [;; [:!O#CTSFQWERPs [:activate "Preview"]];; TODO shit doesn't work as well as asking Alfred to do it. Why?
+                 ;; [:!O#CTSFQWERPd [:open-app "Emacs"]]
+                 ;; [:!O#CTSFQWERPf [:open-app "Arc"]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:!O#CTSFQWERP [:open-app ""]]
+                 ;; [:##left_option :!!left_option nil {:alone :f19}]
+                 ]}
+        {:des "left_option to hyper if doesn't open something" ;catchall
+         :rules [[:##left_option :!!left_option nil {:alone :f19}]]}
+        {:des "since left_control is redundant, and left_option doesn't exist anymore, remap left_control to left_option"
+         :rules [[:left_control :left_option]]}
+        {:des "right-command does new things"
+         :rules [ ;; change input methods. 
+                 [:!Q#CTOSFWERPa [:input-method-change-to "com.apple.keylayout.ABC"]]
+                 [:!Q#CTOSFWERPs [:input-method-change-to "com.apple.inputmethod.SCIM.ITABC"]]
+                 ;; [:!Q#CTOSFWERPd [:input-method-change-to "im.rime.inputmethod.Squirrel.Hans"]]
+                 [:!Q#CTOSFWERPd [:input-method-change-to "com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese"]]
+                 [:!Q#CTOSFWERPf [:input-method-change-to "com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese.Katakana"]]
+                 ;; text movement helpers(right-hand)
+                 [:!Q#CTOSFWERPi :up_arrow]
+                 [:!Q#CTOSFWERPj :left_arrow]
+                 [:!Q#CTOSFWERPk :down_arrow]
+                 [:!Q#CTOSFWERPl :right_arrow]
+                 [:!Q#CTOSFWERPh :!Cleft_arrow]
+                 [:!Q#CTOSFWERPsemicolon :!Cright_arrow]
+                 [:!Q#CTOSFWERPu :!Oleft_arrow]
+                 [:!Q#CTOSFWERPo :!Oright_arrow]
+                 ;; text action helpers (left-hand)
+                 [:!Q#CTOSFWERP5 :delete_forward]
+                 [:!Q#CTOSFWERPr :!Odelete_forward]
+                 [:!Q#CTOSFWERPe :!Odelete_or_backspace]
+                 
+                 [:!Q#CTOSFWERPn [:alfred "night toggle" "com.mulvad.nightshift"]]
+                 [:!Q#CTOSFWERPcomma "open /Users/s/Downloads/"]
+                 [:!Q#CTOSFWERPperiod "open /Users/s/Desktop/"]
+                 [:!Q#CTOSFWERPquote [:hammerspoon "toggleWifiEnabled()"]]
+                 [:##right_command :right_command nil {:alone :f19}];; catchall, post f19 if pressed alone
+                 ]}
+        ]}
+
+
+;; !  | means mandatory
+;; #  | means optional
+;; C  | left_command
+;; T  | left_control
+;; O  | left_option
+;; S  | left_shift
+;; F  | fn
+;; Q  | right_command
+;; W  | right_control
+;; E  | right_option
+;; R  | right_shift
+;; P  | caps_lock
+;; !! | mandatory command + control + optional + shift (hyper)
+;; ## | optional any
